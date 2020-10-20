@@ -27,7 +27,7 @@ router.post('/create',(req,res) => {
     console.log(body);
     if(req.body.bookmark_title.toString() == '' || req.body.bookmark_link == '' || req.body.bookmark_publisher == ''){
         errors = "All fields necessary except tags";
-        res.redirect('/bookmark/create',{errors:errors});
+        res.redirect('/bookmark/create');
         //res.render('index',{errors : errors,tag_error:tag_error})
     }else{
         Bookmark.findOne({ link: req.body.bookmark_link} , (err,doc) => {
@@ -36,7 +36,7 @@ router.post('/create',(req,res) => {
             }else{
                 if(doc){
                     errors = "Already existing link";
-                    res.redirect('/bookmark/create',{errors:errors});
+                    res.redirect('/bookmark/create');
                     // res.render('index',{ errors: errors,tag_error});
                 }else{
                     var newBookmark = new Bookmark();
