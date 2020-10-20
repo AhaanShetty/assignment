@@ -6,11 +6,11 @@ const mongoose = require('mongoose');
         required: true
     },
     time_created: {
-        type: Date,
+        type: String,
         required: true
     },
     time_updated:{
-        type: Date
+        type: String
     }
  });
 
