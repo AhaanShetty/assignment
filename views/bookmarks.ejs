@@ -38,6 +38,7 @@
             <p><b>Link:</b> <a href="<%= bookmarks[index].link %>"><%= bookmarks[index].link %> </a></p>
             <p><b>Publisher:</b> <%= bookmarks[index].publisher %></p>
             <p><b>Time of creation:</b> <%= bookmarks[index].time_created %></p>
+            <p><b>Time of updation:</b> <%= bookmarks[index].time_updated %></p>
             <form action="/bookmark/update" method="POST" class="edit">
                 <p><b>Tags:</b> <input disabled value="<%=bookmarks[index].tags_list %>" id="tag_input<%= index %>" name="tag_input" /></p>
                 <small id="info<%= index %>" style="display: none;" class="form-text text-muted">Add comma between tags</small>
