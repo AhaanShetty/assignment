@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookmarks</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        .bookmark_body{
+            border: 1px solid grey;
+            padding: 20px;
+            margin: 10px;
+            border-radius: 10px;
+            height: fit-content;
+        }
+        .edit_links{
+            display: flex;
+            justify-content: space-between;
+        }
+        input{
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <% if( bookmarks.length == 0) {%>
+    <div class="jumbotron">
+        <h3 class="display-4">No bookmarks</h3>
+    </div>
+    <% } %>
+    <div class="container-fluid">
+        <a href="/" style="padding-left: 10px;"><- Home</a>
+        <% for(index in bookmarks) { %>
+        <div class="bookmark_body">
+            <p style="border-bottom: 1px solid grey;"><span style="font-size: 20px; font-weight: 100; font-family: Arial, Helvetica, sans-serif;"><%= bookmarks[index].title %></span></p>
+            <p><b>Link:</b> <a href="<%= bookmarks[index].link %>"><%= bookmarks[index].link %> </a></p>
+            <p><b>Publisher:</b> <%= bookmarks[index].publisher %></p>
+            <p><b>Time of creation:</b> <%= bookmarks[index].time_created %></p>
+            <form action="/bookmark/update" method="POST" class="edit">
+                <p><b>Tags:</b> <input disabled value="<%=bookmarks[index].tags_list %>" id="tag_input<%= index %>" name="tag_input" /></p>
+                <small id="info<%= index %>" style="display: none;" class="form-text text-muted">Add comma between tags</small>
+                <input type="hidden" value="<%= bookmarks[index]._id %>" name="bookmark_id"/>
+                <div class="edit_links">
+                    <button type="submit" class="btn btn-success" style="display: none;" id="submit<%= index %>">Save</button>
+                </form>
+                    <a href="/bookmark/delete/<%= bookmarks[index]._id %>" onclick="return confirm('Are you sure you want to delete this Bookmark ?');" id="delete_link<%= index %>"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></a>
+                    <button type="button"class="btn btn-primary edit_btn" id="<%= index %>">Add or remove tags</button>
+                </div>
+        </div>
+        <% } %>
+    </div>
+
+    <script>
+        
+        $('.edit_btn').click(function(){
+            var id = $(this).attr("id");
+            console.log(id)
+            var a_link = "#delete_link".concat(id);
+            var submit_btn = "#submit".concat(id);
+            var input = "#tag_input".concat(id);
+            var info = "#info".concat(id);
+            $(a_link).css('display','none');
+            $(submit_btn).css('display','block');
+            $(this).css('display','none');
+            $(input).removeAttr("disabled");
+            $(input).css('border','1px solid black');
+            $(info).css('display','block');
+        });
+
+        // $('.edit').on('submit', function(e){
+        //     e.preventDefault();
+        //     var values = $(this).serialize();
+        //     console.log(values);
+        // });
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
